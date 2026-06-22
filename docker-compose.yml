@@ -1,0 +1,77 @@
+# docker-compose.yml — Development Mode
+# Usage: docker compose up --build
+
+services:
+  # ---------- MongoDB ----------
+  mongodb:
+    image: mongo:7
+    container_name: absens-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+  # ---------- Node.js Backend ----------
+  backend:
+    build:
+      context: ./Backend
+      target: development
+    container_name: absens-backend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./Backend/.env
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/absens
+      FRONTEND_URL: http://localhost:3000
+    volumes:
+      - ./Backend/src:/app/src          # hot-reload source files
+      - /app/node_modules               # preserve container node_modules
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  # ---------- Next.js Frontend ----------
+  frontend:
+    build:
+      context: ./Frontend
+      target: development
+    container_name: absens-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:4000/api/v1
+      NEXT_PUBLIC_IMAGE_RECOGNITION_URL: http://localhost:8000
+    volumes:
+      - ./Frontend/app:/app/app          # hot-reload app directory
+      - ./Frontend/components:/app/components
+      - ./Frontend/contexts:/app/contexts
+      - ./Frontend/hooks:/app/hooks
+      - ./Frontend/lib:/app/lib
+      - ./Frontend/services:/app/services
+      - ./Frontend/utils:/app/utils
+      - ./Frontend/public:/app/public
+      - /app/node_modules                # preserve container node_modules
+      - /app/.next                       # preserve container .next cache
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # ---------- Python Image Matching Backend ----------
+  image-matching:
+    build:
+      context: ./Image_matching_backend
+      target: development
+    container_name: absens-image-matching
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./Image_matching_backend/.env
+    volumes:
+      - ./Image_matching_backend:/app    # hot-reload all Python files
+      - /app/venv                        # don't mount host venv
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  :root {
+    /* New professional blue-based color scheme */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary: Royal Blue */
+    --primary: 215 100% 30%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary: Light Blue-Gray */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11%;
+
+    /* Accent: Amber/Gold */
+    --accent: 35 100% 50%;
+    --accent-foreground: 210 20% 12%;
+
+    /* Supporting colors */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 215 100% 30%;
+
+    /* Chart colors */
+    --chart-1: 215 100% 50%;
+    --chart-2: 262 83% 58%;
+    --chart-3: 35 100% 50%;
+    --chart-4: 187 100% 42%;
+    --chart-5: 355 100% 68%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Background and text colors */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    /* Card colors */
+    --card: 222 45% 13%;
+    --card-foreground: 210 40% 98%;
+
+    /* Popover colors */
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary: Darker Blue for dark mode */
+    --primary: 213 70% 25%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary: Darker Blue-Gray */
+    --secondary: 217 33% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent: Muted Gold for dark mode */
+    --accent: 35 80% 45%;
+    --accent-foreground: 210 40% 98%;
+
+    /* Supporting colors */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 70%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Border and input colors */
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 213 70% 30%;
+
+    /* Chart colors */
+    --chart-1: 213 70% 40%;
+    --chart-2: 262 60% 50%;
+    --chart-3: 35 70% 50%;
+    --chart-4: 187 70% 40%;
+    --chart-5: 355 70% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}
