@@ -38,6 +38,24 @@ By combining cutting-edge technology with a user-friendly interface, ABSENS aims
 - **Embedding Models**: Google's Embedding Model
 - **Vector Database**: For efficient similarity search
 
+
+<img width="1919" height="989" alt="Screenshot 2026-06-23 at 2 33 35 AM" src="https://github.com/user-attachments/assets/f20c417b-4798-42f8-b0a1-0b9e72f3fc9c" />
+<img width="1920" height="1080" alt="Screenshot 2026-06-23 at 2 33 53 AM (2)" src="https://github.com/user-attachments/assets/7ab19a46-f7ad-4410-a96e-71ba80d1991e" />
+<img width="1921" height="989" alt="Screenshot 2026-06-23 at 2 33 10 AM" src="https://github.com/user-attachments/assets/58d57bed-1af1-418f-b2ba-f2c23c1df391" />
+
+
+
+
+
+<img width="1919" height="988" alt="Screenshot 2026-06-23 at 2 33 23 AM" src="https://github.com/user-attachments/assets/7d5d1bf9-bdf9-4736-ae8c-8c7d486d7a21" />
+<img width="1909" height="1077" alt="Screenshot 2026-06-23 at 2 34 39 AM" src="https://github.com/user-attachments/assets/98cd545a-72fe-4d9e-b7ab-6e4282d4f434" />
+<img width="1917" height="1078" alt="Screenshot 2026-06-23 at 2 34 51 AM" src="https://github.com/user-attachments/assets/20483b06-4d96-4263-a944-b25a794d9617" />
+
+
+
+
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
