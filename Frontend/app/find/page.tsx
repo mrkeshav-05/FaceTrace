@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AuthRequiredPrompt } from "@/components/ui/auth-required-prompt";
 import { PageLoader } from "@/components/ui/page-loader";
 import { refreshUserData } from "@/services/user.service";
+import { logout } from "@/lib/slices/authSlice";
 import { toast } from "sonner";
 
 type MissingPerson = {
@@ -159,31 +160,36 @@ export default function FindPage() {
         },
       });
 
+      if (response.status === 401) {
+        dispatch(logout());
+        toast.error("Session Expired", {
+          description: "Your session is invalid or expired. Please log in again."
+        });
+        router.push("/login");
+        return;
+      }
+
       const data = await response.json();
 
       if (response.ok) {
-        // Call FastAPI backend with returned data and wait for it to finish
-        setIsProcessingFastAPI(true);
-        await callFastAPIBackend(data.data);
-        setIsProcessingFastAPI(false);
+        // Fire-and-forget: save embeddings in the background without blocking
+        // The user can search for matches on the detail page
+        callFastAPIBackend(data.data).catch((err) => {
+          console.error("Background embedding save failed:", err);
+        });
 
         // Show success message
         toast.success("Report Submitted", {
-          description: "Your missing person report has been submitted successfully."
+          description: "Your missing person report has been submitted successfully. You can now search for matches."
         });
 
-        // Refresh user data in Redux store before redirecting
-        setIsRefreshingUserData(true);
-        const refreshSuccess = await refreshUserData(dispatch);
-        setIsRefreshingUserData(false);
+        // Refresh user data in Redux store in the background
+        refreshUserData(dispatch).catch((err) => {
+          console.error("Background user data refresh failed:", err);
+        });
 
-        if (refreshSuccess) {
-          // Redirect to dashboard with updated data
-          router.push("/dashboard");
-        } else {
-          // If refresh fails, still redirect but to the my-missing page
-          router.push("/my-missing");
-        }
+        // Redirect immediately to the detail page where the user can search for matches
+        router.push(`/missing/${data.data._id}`);
       } else {
         toast.error("Submission Failed", {
           description: data.message || "Failed to submit report. Please try again."

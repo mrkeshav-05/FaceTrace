@@ -8,16 +8,17 @@ const verifyToken = asyncHandler(async (req, res, next) => {
         const token =
             req.cookies?.accessToken ||
             req.header('Authorization')?.replace('Bearer ', '');
-                                                                                
-        if (!token) throw new ApiError(401, 'Unauthorized access');             
-        const decodedToken = jwt.decode(token, process.env.ACCESS_TOKEN_SECRET);
+
+        if (!token) throw new ApiError(401, 'Unauthorized access');
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
         const user = await User.findById(decodedToken?._id);
 
-        if (!user) return new ApiError(401, 'Unauthorized access');
+        if (!user) throw new ApiError(401, 'Unauthorized access');
         req.user = user;
         next();
     } catch (error) {
+        console.error("Auth middleware error:", error);
         // Handle token verification errors
         if (
             error.name === 'JsonWebTokenError' ||
@@ -29,7 +30,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
             );
         }
         // Handle other errors
-        throw new ApiError(500, 'Internal server error');
+        throw new ApiError(500, error.message || 'Internal server error');
     }
 });
 

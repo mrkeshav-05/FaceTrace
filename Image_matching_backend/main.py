@@ -52,7 +52,7 @@ def allowed_file(filename):
 
 async def process_single_image(user_id: str, url: str, session: aiohttp.ClientSession):
     try:
-        async with session.get(url, timeout=30) as response:
+        async with session.get(url) as response:
             response.raise_for_status()
             content = await response.read()
 
@@ -61,13 +61,19 @@ async def process_single_image(user_id: str, url: str, session: aiohttp.ClientSe
 
         embedding = await generate_embeddings(upload_file)
         return embedding
+    except asyncio.TimeoutError:
+        print(f"Timeout downloading image from URL {url}")
+        return None
     except Exception as e:
         print(f"Error processing image from URL {url}: {e}")
         return None
 
+# 30-second timeout for downloading images from Cloudinary
+IMAGE_DOWNLOAD_TIMEOUT = aiohttp.ClientTimeout(total=30)
+
 async def process_images(user_id: str, image_urls: List[str]):
     """Common function to process images and generate embeddings in parallel"""
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(timeout=IMAGE_DOWNLOAD_TIMEOUT) as session:
         tasks = [process_single_image(user_id, url, session) for url in image_urls]
         results = await asyncio.gather(*tasks)
 

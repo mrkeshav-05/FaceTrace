@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { AuthRequiredPrompt } from "@/components/ui/auth-required-prompt"
 import { PageLoader } from "@/components/ui/page-loader"
 import { refreshUserData } from "@/services/user.service"
+import { logout } from "@/lib/slices/authSlice"
 import { toast } from "sonner"
 
 // Define types
@@ -174,6 +175,15 @@ export default function ReportPage() {
         },
         body: formData,
       })
+
+      if (response.status === 401) {
+        dispatch(logout());
+        toast.error("Session Expired", {
+          description: "Your session is invalid or expired. Please log in again."
+        });
+        router.push("/login");
+        return;
+      }
 
       if (!response.ok) {
         const errorMessage = await response.text()

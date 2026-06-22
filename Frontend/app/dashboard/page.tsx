@@ -104,6 +104,7 @@ const mockUserData: User = {
 interface RootState {
   auth: {
     user: User | null;
+    isLoggedIn: boolean;
   };
 }
 
@@ -122,6 +123,7 @@ const DashboardPage: React.FC = () => {
 
   // Retrieve authenticated user from Redux store; fallback to mockUserData if not available
   const loggedInUser = useSelector((state: RootState) => state.auth.user);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const currentUser: User = loggedInUser || mockUserData;
 
   // Get the tab from URL query parameter
@@ -134,6 +136,13 @@ const DashboardPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const [error, setError] = useState<{ message: string; type?: ErrorType } | null>(null);
+
+  // Redirect to login if user is not authenticated and the page is not loading
+  useEffect(() => {
+    if (!isPageLoading && !isLoggedIn) {
+      router.push("/login");
+    }
+  }, [isPageLoading, isLoggedIn, router]);
 
   // Combined resolved cases
   const resolvedCases = [

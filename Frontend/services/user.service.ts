@@ -1,6 +1,6 @@
 "use client";
 
-import { setUser } from "@/lib/slices/authSlice";
+import { setUser, logout } from "@/lib/slices/authSlice";
 import { Dispatch } from "redux";
 
 /**
@@ -15,6 +15,7 @@ export const refreshUserData = async (dispatch: Dispatch): Promise<boolean> => {
     
     if (!accessToken) {
       console.error("No access token found");
+      dispatch(logout());
       return false;
     }
     
@@ -27,6 +28,9 @@ export const refreshUserData = async (dispatch: Dispatch): Promise<boolean> => {
     
     if (!response.ok) {
       console.error("Failed to fetch user data:", response.statusText);
+      if (response.status === 401) {
+        dispatch(logout());
+      }
       return false;
     }
     
