@@ -1,10 +1,10 @@
-# ABSENS - AI-Based System for Efficiently Notifying and Searching
+# FaceTrace - AI-Based System for Efficiently Notifying and Searching
 
 ## 📑 Overview
 
-ABSENS is a comprehensive platform developed to help locate and reunite missing individuals using advanced AI technology. The system leverages facial recognition, age progression technology, and a nationwide network of volunteers and law enforcement agencies to create a robust solution for finding missing persons.
+FaceTrace is a comprehensive platform developed to help locate and reunite missing individuals using advanced AI technology. The system leverages facial recognition, age progression technology, and a nationwide network of volunteers and law enforcement agencies to create a robust solution for finding missing persons.
 
-By combining cutting-edge technology with a user-friendly interface, ABSENS aims to streamline the process of reporting, searching for, and identifying missing individuals across India.
+By combining cutting-edge technology with a user-friendly interface, FaceTrace aims to streamline the process of reporting, searching for, and identifying missing individuals across India.
 
 ## ✨ Key Features
 
@@ -184,7 +184,7 @@ absens/
 
 ## 🔐 Authentication Flow
 
-ABSENS implements a secure authentication system using JWT (JSON Web Tokens):
+FaceTrace implements a secure authentication system using JWT (JSON Web Tokens):
 
 1. User registers or logs in through the frontend
 2. Backend validates credentials and issues a JWT and refresh token
@@ -257,7 +257,7 @@ npm start
 
 ## 🤝 Contributing
 
-We welcome contributions to ABSENS! Please follow these steps:
+We welcome contributions to FaceTrace! Please follow these steps:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
